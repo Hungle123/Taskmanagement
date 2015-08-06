@@ -1,6 +1,0 @@
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUse\bin\Debug\ManagerUse.exe.config
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUse\bin\Debug\ManagerUse.exe
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUse\bin\Debug\ManagerUse.pdb
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUse\obj\Debug\ManagerUse.csprojResolveAssemblyReference.cache
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUse\obj\Debug\ManagerUse.exe
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUse\obj\Debug\ManagerUse.pdb
