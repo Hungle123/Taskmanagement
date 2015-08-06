@@ -6,6 +6,7 @@ namespace ManagerUse
     {
         static void Main()
         {
+
             User personOne = new User();
             User personTwo = new User();
 

@@ -1,15 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace ManagerUser
+namespace ManagerUse
 {
+
+    enum TaskType
+    {
+        Bug,
+        Feature,
+    }
+
     class Task
     {
-        public string NameTask { get; set; }
-        public string DescriptionTask { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+
+        public TaskType Type { get; set; }
+
+        public List<User> Users { get; set; }
+        public string State { get; set; }
+        public float Completed { get; set; } 
 
     }
 }
