@@ -17,7 +17,7 @@ namespace ManagerUse
             personTwo.Display(); 
              * */
 
-             ReadUser content = new ReadUser();
+            UserRepository content = new UserRepository();
             content.ReadText();
             content.Display(); 
              

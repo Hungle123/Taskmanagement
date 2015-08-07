@@ -2,8 +2,8 @@
 using System.IO;
 
 namespace ManagerUse
-{  
-    class ReadUser
+{
+    class UserRepository
     {
         public string[] infoUsers;
 
