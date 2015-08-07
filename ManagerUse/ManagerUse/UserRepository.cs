@@ -3,7 +3,7 @@ using System.IO;
 
 namespace ManagerUse
 {
-    class UserRepository
+    public class UserRepository
     {
         public string[] infoUsers;
 
@@ -24,11 +24,12 @@ namespace ManagerUse
         // This is a method display infomation of user froma text file
         public void Display()
         {
-           Console.WriteLine("Content a text file: ");
             foreach (var infoUser in infoUsers)
             {
-                  Console.WriteLine("\t" +infoUser);
+                  Console.WriteLine(infoUser);
             }
         }
+
+
     }
 }

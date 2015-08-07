@@ -19,10 +19,10 @@ namespace ManagerUse
 
             UserRepository content = new UserRepository();
             content.ReadText();
-            content.Display(); 
-             
-
+            content.Display();     
             Console.ReadKey();
         }
     }
 }
+
+

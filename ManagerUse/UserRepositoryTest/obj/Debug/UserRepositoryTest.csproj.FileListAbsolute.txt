@@ -1,0 +1,7 @@
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\UserRepositoryTest\bin\Debug\UserRepositoryTest.dll
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\UserRepositoryTest\bin\Debug\UserRepositoryTest.pdb
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\UserRepositoryTest\obj\Debug\UserRepositoryTest.dll
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\UserRepositoryTest\obj\Debug\UserRepositoryTest.pdb
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\UserRepositoryTest\bin\Debug\ManagerUse.exe
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\UserRepositoryTest\bin\Debug\ManagerUse.pdb
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\UserRepositoryTest\obj\Debug\UserRepositoryTest.csprojResolveAssemblyReference.cache
