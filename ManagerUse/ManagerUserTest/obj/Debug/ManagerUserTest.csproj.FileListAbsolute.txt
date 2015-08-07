@@ -1,7 +1,0 @@
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUserTest\obj\Debug\ManagerUserTest.csprojResolveAssemblyReference.cache
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUserTest\bin\Debug\ManagerUserTest.dll
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUserTest\bin\Debug\ManagerUserTest.pdb
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUserTest\bin\Debug\ManagerUse.exe
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUserTest\bin\Debug\ManagerUse.pdb
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUserTest\obj\Debug\ManagerUserTest.dll
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\ManagerUserTest\obj\Debug\ManagerUserTest.pdb
