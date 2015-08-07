@@ -10,7 +10,15 @@ namespace ManagerUse
         // This id method read list of user from a text file
         public void ReadText()
         {
-            infoUsers = File.ReadAllLines(@"C:\Users\dn00001\Documents\GitHub\Taskmanagement\user.txt");
+            try
+            {
+                infoUsers = File.ReadAllLines(@"C:\Users\dn00001\Documents\GitHub\Taskmanagement\user.txt");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The file could not be read");
+                Console.WriteLine(e.Message);
+            }
         }
 
         // This is a method display infomation of user froma text file

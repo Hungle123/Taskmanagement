@@ -17,11 +17,10 @@ namespace ManagerUse
             personTwo.Display(); 
              * */
 
-            /*
-             * ReadUser content = new ReadUser();
+             ReadUser content = new ReadUser();
             content.ReadText();
             content.Display(); 
-             */
+             
 
             Console.ReadKey();
         }
