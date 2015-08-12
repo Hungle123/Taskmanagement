@@ -18,8 +18,8 @@ namespace ManagerUse
              * */
 
             UserRepository content = new UserRepository();
-            content.ReadText();
-            content.Display();     
+            TaskRepository task = new TaskRepository();
+            task.ReadText();
             Console.ReadKey();
         }
     }

@@ -1,0 +1,6 @@
+Name: Task name goes here
+Description: Description goes here
+Type: (Either Bug or Feature)
+User: Tran Thien Khiem (look up in user repository for this user)
+State: (Either ToDo - Doing - Done - or Tested)
+CompletedPercent: 50%
