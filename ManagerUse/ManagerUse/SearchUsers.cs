@@ -10,6 +10,7 @@ namespace ManagerUse
             var uRepository = new UserRepository();
             string textString = uRepository.ReadText();
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            user = textInfo.ToLower(user);
             user = textInfo.ToTitleCase(user);
             if (System.Text.RegularExpressions.Regex.IsMatch(textString, user,
                 System.Text.RegularExpressions.RegexOptions.IgnoreCase))

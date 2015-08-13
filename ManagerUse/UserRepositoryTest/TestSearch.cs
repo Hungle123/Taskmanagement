@@ -1,5 +1,4 @@
-﻿using System;
-using ManagerUse;
+﻿using ManagerUse;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace UserRepositoryTest
@@ -12,7 +11,7 @@ namespace UserRepositoryTest
         {
             SearchUsers user = new SearchUsers();
             string ecpected = "Le Hung";
-            var name = "le hung";
+            var name = "LE HUNG";
             var result = user.Search(name);
             Assert.AreEqual(ecpected, result);
         }
