@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ManagerUse
 {
@@ -29,7 +25,6 @@ namespace ManagerUse
                 result += infoTask + "\n";
             }
            return result.Trim();
-           //Console.WriteLine(result.Trim());
         }
     }
 }
