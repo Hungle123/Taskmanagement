@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Globalization;
 using System.Net.Mime;
 namespace ManagerUse
 {    
@@ -7,7 +8,7 @@ namespace ManagerUse
     {
         static void Main()
         {
-           //do something
+            Console.ReadLine();
         }
     }
 }

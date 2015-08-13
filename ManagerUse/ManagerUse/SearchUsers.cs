@@ -1,22 +1,24 @@
 ﻿using System;
+using System.Globalization;
+
 namespace ManagerUse
 {
-    class SearchUsers : UserRepository
+   public class SearchUsers : UserRepository
     {
-        public void Search()
+        public string Search(string user)
         {
             var uRepository = new UserRepository();
             string textString = uRepository.ReadText();
-            Console.WriteLine("Enter Name user: ");
-            var user = Convert.ToString(Console.ReadLine());
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+            user = textInfo.ToTitleCase(user);
             if (System.Text.RegularExpressions.Regex.IsMatch(textString, user,
                 System.Text.RegularExpressions.RegexOptions.IgnoreCase))
             {
-                Console.WriteLine(" Match for : '{0}' found !", user);
+                return user;
             }
             else
             {
-                Console.WriteLine("Username not found !");
+                return null;
             }
         }
 
