@@ -7,24 +7,30 @@ namespace UserRepositoryTest
     public class TestUser
     {
         [TestMethod]
-        public void ChekInfoUsers()
+        public void TestSearchFound()
         {
-            UserRepository userRepository =  new UserRepository();
-            
-            string[] infoUsers = new string[]{
-                                                 "Name: Tran Thien Khiem\n",
-                                                 "Email: daniel@clearpathdevelopment.com\n",
-                                                 "Name: Le Hung\n",
-                                                 "Email: nick@clearpathdevelopement.com"
-                                              };
-            string expected = null;
-            foreach (var infoUser in infoUsers)
-            {
-                expected += infoUser;
-            }
-            var result = userRepository.ReadText();
-            Assert.IsNotNull(result);
-            Assert.AreEqual(expected,result);
+            var userRepository = new UserRepository();
+            userRepository.Users.Add(new User("Khiem", "thienkhiem88@gmail.com"));
+            userRepository.Users.Add(new User("ABC", "abc@def.com"));
+
+            var user = userRepository.Search("Khiem");
+
+            Assert.IsNotNull(user);
+            Assert.AreEqual("Khiem", user.Name);
+           // Assert.AreEqual("thienkhiem88@gmail.com", user.Email);
+        }
+
+
+        [TestMethod]
+        public void TestNotFound()
+        {
+            var userRepository = new UserRepository();
+            userRepository.Users.Add(new User("Khiem", "thienkhiem88@gmail.com"));
+            userRepository.Users.Add(new User("ABC", "abc@def.com"));
+
+            var user = userRepository.Search("XYZ");
+
+            Assert.IsNull(user);
         }
     }
 }

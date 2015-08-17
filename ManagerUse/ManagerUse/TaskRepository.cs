@@ -29,5 +29,6 @@ namespace ManagerUse
             
            return result.Trim();
         }
+
     }
 }
