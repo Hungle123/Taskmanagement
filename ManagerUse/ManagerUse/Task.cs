@@ -1,5 +1,4 @@
-﻿
-using System.Collections.Generic;
+﻿using System;
 
 namespace ManagerUse
 {
@@ -31,7 +30,7 @@ namespace ManagerUse
 
         public TaskType Type { get; set; }
 
-        public List<User> User { get; set; }
+        public User User { get; set; }
 
         public TaskState State { get; set; }
 
@@ -51,7 +50,7 @@ namespace ManagerUse
         /// <param name="user"></param>
         /// <param name="state"></param>
         /// <param name="complateedPercent"></param>
-        public Task(string name, string description, TaskType type, List<User> user, TaskState state, string complateedPercent)
+        public Task(string name, string description, TaskType type, User user, TaskState state, string complateedPercent)
         {
             Name = name;
             Description = description;
@@ -59,6 +58,23 @@ namespace ManagerUse
             User = user;
             State = state;
             ComplateedPercent = complateedPercent;
+        }
+
+        /// <summary>
+        ///   Create method check parameters user have same with user in the task
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public Boolean ContainUser(User user)
+        {
+            if (User != null && user !=null)
+            {
+                if (User.Name == user.Name)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
     }

@@ -14,7 +14,6 @@ namespace ManagerUse
         public const string CompalateText = "CompletedPercent:";
 
         public List<Task> Tasks { get; set; }
-        public List<User> Users { get; set; }
 
         /// <summary>
         /// The instance of this class
@@ -41,20 +40,21 @@ namespace ManagerUse
 
         /// <summary>
         /// This is method read list of tasks from a text file
-        /// <//summary>
+        /// </summary>
         /// <returns></returns>
         public List<Task> ReadText()
         {
             Tasks = new List<Task>();
-            Users = new List<User>();
             string name = null;
             string description = null;
             var type = TaskType.Bug;
             var state = TaskState.ToDo;
+            var userName = "";
             try
             {
                 var taskInfo = new StreamReader("task.txt");
                 string listTask;
+                
                 while ((listTask = taskInfo.ReadLine()) != null)
                 {
                     var line = listTask.Trim();
@@ -64,8 +64,8 @@ namespace ManagerUse
                     var startWithUser = line.StartsWith(UserText);
                     var startWithState = line.StartsWith(StateText);
                     var startWithComplate = line.StartsWith(CompalateText);
-
                     int indexOfValue;
+
                     if (startWithName)
                     {
                         indexOfValue = NameText.Length;
@@ -93,8 +93,7 @@ namespace ManagerUse
                     else if (startWithUser)
                     {
                         indexOfValue = UserText.Length;
-                        var typeUser = line.Substring(indexOfValue).Trim();
-                        Users.Add(new User(typeUser));
+                        userName = line.Substring(indexOfValue).Trim();
                     }
                     else if (startWithState)
                     {
@@ -120,7 +119,8 @@ namespace ManagerUse
                     {
                         indexOfValue = CompalateText.Length;
                         var complate = line.Substring(indexOfValue).Trim();
-                        Tasks.Add(new Task(name, description, type, Users, state, complate));
+                        var user = new User(userName);
+                        Tasks.Add(new Task(name, description, type, user, state, complate));
                     }
                 }
             }
@@ -139,9 +139,18 @@ namespace ManagerUse
         /// <param name="user"></param>
         /// <param name="state"></param>
         /// <returns></returns>
-        public IList<Task> GetUserTasks(User user, Task state)
+        public IList<Task> GetUserTasks(User user, TaskState state)
         {
-            return null;
+            IList<Task> listTask = new List<Task>();
+            foreach (var task in Tasks)
+            {
+                var result = task.ContainUser(user);
+                if (result && task.State == state)
+                {
+                    listTask.Add(task);
+                }
+            }
+            return listTask;
         }
     }
 }

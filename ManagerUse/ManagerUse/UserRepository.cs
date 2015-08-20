@@ -33,7 +33,6 @@ namespace ManagerUse
             {
                 _instance = new UserRepository();
             }
-
             return _instance;
         }
 
@@ -75,6 +74,7 @@ namespace ManagerUse
             }
             return Users;
         }
+
         /// <summary>
         /// Search userName for User on the list Users
         /// </summary>
@@ -83,13 +83,16 @@ namespace ManagerUse
         public User Search(string userName)
         {
             User result = null;
-            userName = userName.ToLower();
-            foreach (var user in Users)
+            if (userName != null)
             {
-                if (user.Name.ToLower().Contains(userName))
+                userName = userName.ToLower();
+                foreach (var user in Users)
                 {
-                    result = user;
-                    break;
+                    if (user.Name.ToLower() == (userName))
+                    {
+                        result = user;
+                        break;
+                    }
                 }
             }
             return result;

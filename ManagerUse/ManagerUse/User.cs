@@ -16,7 +16,8 @@ namespace ManagerUse
         {
             Name = name;
         }
-        /// <summary/>
+
+        /// <summary>
         /// Create method constructor two parameters name and email
         /// </summary>
         /// <param name="name"></param>
@@ -26,5 +27,6 @@ namespace ManagerUse
             Name = name;
             Email = email;
         }
+
     }
 }

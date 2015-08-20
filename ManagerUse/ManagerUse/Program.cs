@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ManagerUse
 {
@@ -8,7 +9,11 @@ namespace ManagerUse
         {
             var taskReponsive = TaskRepository.GetIntance();
             taskReponsive.ReadText();
-            taskReponsive.UserName();
+            var results = taskReponsive.GetUserTasks(new User("Hung"), TaskState.Done);
+            foreach (var result  in results)
+            {
+                Console.WriteLine(result.Name);  
+            }
             Console.ReadLine();
         }
 
