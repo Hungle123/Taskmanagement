@@ -1,15 +1,29 @@
-﻿using System.Collections.Generic;
+﻿
+using System.Collections.Generic;
 
 namespace ManagerUse
 {
-
-    enum TaskType
+    /// <summary>
+    /// Create enum for Task Type
+    /// </summary>
+    public enum TaskType
     {
         Bug,
         Feature,
     }
 
-    class Task
+    /// <summary>
+    /// Create enum for Task State
+    /// </summary>
+    public enum TaskState
+    {
+        ToDo,
+        Doing,
+        Done,
+        Tested
+    }
+
+    public class Task
     {
         public string Name { get; set; }
 
@@ -17,28 +31,35 @@ namespace ManagerUse
 
         public TaskType Type { get; set; }
 
-        List<User> Users { get; set; }
+        public List<User> User { get; set; }
 
-        public string State { get; set; }
+        public TaskState State { get; set; }
 
-        public int ComplateedPercent { get; set; }
-
+        public string ComplateedPercent { get; set; }
 
         /// <summary>
-        /// Create Contructor for class Task
+        /// Create method constructor no parameter
         /// </summary>
-
         public Task() { }
 
-        public Task(string name, string description, TaskType type, List<User> users, string state, int complateedPercent)
+        /// <summary>
+        /// Create method constructer parameters
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="type"></param>
+        /// <param name="user"></param>
+        /// <param name="state"></param>
+        /// <param name="complateedPercent"></param>
+        public Task(string name, string description, TaskType type, List<User> user, TaskState state, string complateedPercent)
         {
-            
             Name = name;
             Description = description;
             Type = type;
-            Users = users;
+            User = user;
             State = state;
             ComplateedPercent = complateedPercent;
         }
+
     }
 }

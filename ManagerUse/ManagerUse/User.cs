@@ -3,22 +3,21 @@ namespace ManagerUse
 {
     public class User
     {
-        public string Name
-        {
-            get;
-            set;
-        }
+        public string Name { get; set; }
 
-        public string Email
-        {
-            get;
-            set;
-        }
-
-        public User() { }
+        public string Email { get; set; }
 
         /// <summary>
-        /// Create method constructor
+        /// Create method constructor no parameters
+        /// </summary>
+        public User() { }
+
+        public User(string name)
+        {
+            Name = name;
+        }
+        /// <summary>
+        /// Create method constructor two parameters name and email
         /// </summary>
         /// <param name="name"></param>
         /// <param name="email"></param>
@@ -27,6 +26,5 @@ namespace ManagerUse
             Name = name;
             Email = email;
         }
-
     }
 }

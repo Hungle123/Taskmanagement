@@ -1,0 +1,12 @@
+Name: Task 1
+Description: Description goes here
+Type: Bug
+User: Tran Khiem
+State: To Do
+CompletedPercent: 50%
+Name: Task 2
+Description: Description goes here
+Type: Feature
+User: Hung
+State: Done
+CompletedPercent: 100%
