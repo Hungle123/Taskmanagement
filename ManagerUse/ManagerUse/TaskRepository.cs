@@ -132,18 +132,6 @@ namespace ManagerUse
             return Tasks;
         }
 
-
-        public void UserName()
-        {
-            foreach (var user in Users)
-            {
-                Console.WriteLine(user.Name);
-            }
-            foreach (var task in Tasks)
-            {
-               Console.WriteLine(task.State); 
-            }
-        }
         /// <summary>
         /// Method to list of task of the selected user 
         /// and seleted state in TaskRepostory class 
