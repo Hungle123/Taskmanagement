@@ -8,7 +8,7 @@ namespace ManagerUse
         public string Email { get; set; }
 
         /// <summary>
-        /// Create method constructor no parameters
+        /// Create method constructor no parameter
         /// </summary>
         public User() { }
 
@@ -16,7 +16,7 @@ namespace ManagerUse
         {
             Name = name;
         }
-        /// <summary>
+        /// <summary/>
         /// Create method constructor two parameters name and email
         /// </summary>
         /// <param name="name"></param>

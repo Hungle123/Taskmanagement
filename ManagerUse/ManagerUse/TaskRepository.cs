@@ -41,7 +41,7 @@ namespace ManagerUse
 
         /// <summary>
         /// This is method read list of tasks from a text file
-        /// </summary>
+        /// <//summary>
         /// <returns></returns>
         public List<Task> ReadText()
         {

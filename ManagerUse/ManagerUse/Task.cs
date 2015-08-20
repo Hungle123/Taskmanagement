@@ -38,7 +38,7 @@ namespace ManagerUse
         public string ComplateedPercent { get; set; }
 
         /// <summary>
-        /// Create method constructor no parameter
+        /// Create method constructor no parameters
         /// </summary>
         public Task() { }
 

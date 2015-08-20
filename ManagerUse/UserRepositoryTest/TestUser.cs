@@ -7,6 +7,9 @@ namespace UserRepositoryTest
     [TestClass]
     public class TestUser
     {
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TestUserRepository()
         {
@@ -24,6 +27,9 @@ namespace UserRepositoryTest
             Assert.IsNotNull(users);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TestTaskRepository()
         {
@@ -50,7 +56,9 @@ namespace UserRepositoryTest
             Assert.IsNotNull(tasks);
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TestSearchFound()
         {
@@ -67,7 +75,9 @@ namespace UserRepositoryTest
             Assert.AreEqual("Khiem", user.Name);
             Assert.AreEqual("thienkhiem88@gmail.com", user.Email);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TestNotFound()
         {
