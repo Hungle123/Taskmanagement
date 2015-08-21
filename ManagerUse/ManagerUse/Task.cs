@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 
 namespace ManagerUse
 {
@@ -30,11 +30,14 @@ namespace ManagerUse
 
         public TaskType Type { get; set; }
 
-        public User User { get; set; }
+        //  public User User { get; set; }
+
+
+        public List<User> Users { get; set; }
 
         public TaskState State { get; set; }
 
-        public string ComplateedPercent { get; set; }
+        public int CompletedPercent { get; set; }
 
         /// <summary>
         /// Create method constructor no parameters
@@ -49,33 +52,37 @@ namespace ManagerUse
         /// <param name="type"></param>
         /// <param name="user"></param>
         /// <param name="state"></param>
-        /// <param name="complateedPercent"></param>
-        public Task(string name, string description, TaskType type, User user, TaskState state, string complateedPercent)
+        /// <param name="completedPercent"></param>
+        public Task(string name, string description, TaskType type, List<User> user, TaskState state, int completedPercent)
         {
             Name = name;
             Description = description;
             Type = type;
-            User = user;
+            Users = user;
             State = state;
-            ComplateedPercent = complateedPercent;
+            CompletedPercent = completedPercent;
         }
 
         /// <summary>
         ///   Create method check parameters user have same with user in the task
         /// </summary>
-        /// <param name="user"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
-        public Boolean ContainUser(User user)
+        public bool ContainUser(User name)
         {
-            if (User != null && user !=null)
+            if (Users != null && name != null)
             {
-                if (User.Name == user.Name)
+                foreach (var user in Users)
                 {
-                    return true;
+                    if (user.Name == name.Name)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
+        public User User { get; set; }
     }
 }

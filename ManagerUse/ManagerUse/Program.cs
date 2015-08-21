@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-
 namespace ManagerUse
 {
     class Program
     {
         static void Main()
         {
-            var taskReponsive = TaskRepository.GetIntance();
-            taskReponsive.ReadText();
-            var results = taskReponsive.GetUserTasks(new User("Hung"), TaskState.Done);
-            foreach (var result  in results)
+            var taskRepository = TaskRepository.GetIntance();
+            var tasks = taskRepository.ReadText();
+            foreach (var task in tasks)
             {
-                Console.WriteLine(result.Name);  
+                Console.WriteLine(task.CompletedPercent);
             }
             Console.ReadLine();
         }

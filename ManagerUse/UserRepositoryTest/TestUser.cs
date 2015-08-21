@@ -38,7 +38,6 @@ namespace UserRepositoryTest
             var taskName = "";
             var taskDescription = "";
             var taskType = "";
-            var taskUser = "";
             var taskState = "";
             var taskComplate = "";
             foreach (var task in tasks)
@@ -47,14 +46,12 @@ namespace UserRepositoryTest
                 taskDescription += task.Description;
                 taskType += task.Type;
                 taskState += task.State;
-                taskUser += task.User.Name;
-                taskComplate += task.ComplateedPercent;
+                taskComplate += task.CompletedPercent;
             }
             Assert.AreEqual("Task 1" + "Task 2", taskName);
             Assert.AreEqual("Description goes here" + "Description goes here", taskDescription);
             Assert.AreEqual("Bug" + "Feature", taskType);
             Assert.AreEqual("ToDo" + "Done", taskState);
-            Assert.AreEqual("Tran Khiem" + "Hung", taskUser);
             Assert.AreEqual("50%" + "100%", taskComplate);
             Assert.IsNotNull(tasks);
         }
@@ -73,7 +70,6 @@ namespace UserRepositoryTest
             };
 
             var user = userRepository.Search("Khiem");
-
             Assert.IsNotNull(user);
             Assert.AreEqual("Khiem", user.Name);
             Assert.AreEqual("thienkhiem88@gmail.com", user.Email);
@@ -90,7 +86,6 @@ namespace UserRepositoryTest
                 new User("Khiem", "thienkhiem88@gmail.com"),
                 new User("ABC", "abc@def.com")
             };
-
             var user = userRepository.Search("XYZ");
             Assert.IsNull(user);
         }
@@ -100,12 +95,31 @@ namespace UserRepositoryTest
         {
             var user = new User("Hung");
             var tasks = new Task();
-            tasks.User = new User("Hung");
+            tasks.Users = new List<User> { new User("Hung") };
             var result = tasks.ContainUser(user);
             Assert.AreEqual(true, result);
             Assert.IsNotNull(user);
+        }
 
+        [TestMethod]
+        public void TestGetUserTasks()
+        {
+            var taskRepository = TaskRepository.GetIntance();
 
+            taskRepository.Tasks = new List<Task>
+            {
+                new Task("Task 3", "Do something",TaskType.Bug,
+                new List<User>() { new User("Nick")}, TaskState.Doing, 90)
+            };
+
+            var tasks = taskRepository.GetUserTasks(new User("Nick"), TaskState.Doing);
+            int complate = 0;
+            foreach (var task in tasks)
+            {
+               complate = task.CompletedPercent;
+            }
+            Assert.AreEqual(90, complate);
+            Assert.IsNotNull(tasks);
         }
     }
 }

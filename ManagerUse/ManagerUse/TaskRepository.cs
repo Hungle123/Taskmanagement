@@ -14,7 +14,6 @@ namespace ManagerUse
         public const string CompalateText = "CompletedPercent:";
 
         public List<Task> Tasks { get; set; }
-
         /// <summary>
         /// The instance of this class
         /// </summary>
@@ -45,8 +44,8 @@ namespace ManagerUse
         public List<Task> ReadText()
         {
             Tasks = new List<Task>();
-            string name = null;
-            string description = null;
+            string name = "";
+            string description = "";
             var type = TaskType.Bug;
             var state = TaskState.ToDo;
             var userName = "";
@@ -54,7 +53,7 @@ namespace ManagerUse
             {
                 var taskInfo = new StreamReader("task.txt");
                 string listTask;
-                
+
                 while ((listTask = taskInfo.ReadLine()) != null)
                 {
                     var line = listTask.Trim();
@@ -64,6 +63,7 @@ namespace ManagerUse
                     var startWithUser = line.StartsWith(UserText);
                     var startWithState = line.StartsWith(StateText);
                     var startWithComplate = line.StartsWith(CompalateText);
+                    
                     int indexOfValue;
 
                     if (startWithName)
@@ -118,8 +118,9 @@ namespace ManagerUse
                     else if (startWithComplate)
                     {
                         indexOfValue = CompalateText.Length;
-                        var complate = line.Substring(indexOfValue).Trim();
-                        var user = new User(userName);
+                        var subComplate = line.Substring(indexOfValue).Trim();
+                        var complate = Int32.Parse(subComplate.Replace("%", ""));
+                        var user = new List<User> {new User(userName)};
                         Tasks.Add(new Task(name, description, type, user, state, complate));
                     }
                 }
@@ -141,16 +142,19 @@ namespace ManagerUse
         /// <returns></returns>
         public IList<Task> GetUserTasks(User user, TaskState state)
         {
-            IList<Task> listTask = new List<Task>();
-            foreach (var task in Tasks)
+            var listTasks = new List<Task>();
+            if (user != null)
             {
-                var result = task.ContainUser(user);
-                if (result && task.State == state)
+                foreach (var task in Tasks)
                 {
-                    listTask.Add(task);
+                    var result = task.ContainUser(user);
+                    if (result && task.State == state)
+                    {
+                        listTasks.Add(task);
+                    }
                 }
             }
-            return listTask;
+            return listTasks;
         }
     }
 }
