@@ -30,9 +30,6 @@ namespace ManagerUse
 
         public TaskType Type { get; set; }
 
-        //  public User User { get; set; }
-
-
         public List<User> Users { get; set; }
 
         public TaskState State { get; set; }
@@ -70,8 +67,10 @@ namespace ManagerUse
         /// <returns></returns>
         public bool ContainUser(User name)
         {
+            // ReSharper disable once InvertIf
             if (Users != null && name != null)
             {
+                // ReSharper disable once LoopCanBeConvertedToQuery
                 foreach (var user in Users)
                 {
                     if (user.Name == name.Name)
@@ -82,7 +81,5 @@ namespace ManagerUse
             }
             return false;
         }
-
-        public User User { get; set; }
     }
 }

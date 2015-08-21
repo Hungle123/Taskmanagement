@@ -8,7 +8,7 @@ namespace UserRepositoryTest
     public class TestUser
     {
         /// <summary>
-        /// 
+        ///   This is test method read file user.txt in UserRepository class
         /// </summary>
         [TestMethod]
         public void TestUserRepository()
@@ -28,7 +28,7 @@ namespace UserRepositoryTest
         }
 
         /// <summary>
-        /// 
+        ///  This is test method read file user.txt in TaskRepository class
         /// </summary>
         [TestMethod]
         public void TestTaskRepository()
@@ -39,12 +39,18 @@ namespace UserRepositoryTest
             var taskDescription = "";
             var taskType = "";
             var taskState = "";
+            var taskUser = "";
             var taskComplate = "";
             foreach (var task in tasks)
             {
                 taskName += task.Name;
                 taskDescription += task.Description;
                 taskType += task.Type;
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (var user in task.Users)
+                {
+                    taskUser += user.Name;
+                }
                 taskState += task.State;
                 taskComplate += task.CompletedPercent;
             }
@@ -52,12 +58,13 @@ namespace UserRepositoryTest
             Assert.AreEqual("Description goes here" + "Description goes here", taskDescription);
             Assert.AreEqual("Bug" + "Feature", taskType);
             Assert.AreEqual("ToDo" + "Done", taskState);
-            Assert.AreEqual("50%" + "100%", taskComplate);
+            Assert.AreEqual("Tran Khiem" + "Hung", taskUser);
+            Assert.AreEqual("50" + "100", taskComplate);
             Assert.IsNotNull(tasks);
         }
 
         /// <summary>
-        /// 
+        ///  Test function search user in list users
         /// </summary>
         [TestMethod]
         public void TestSearchFound()
@@ -75,7 +82,7 @@ namespace UserRepositoryTest
             Assert.AreEqual("thienkhiem88@gmail.com", user.Email);
         }
         /// <summary>
-        /// 
+        ///  Test case not return result with method search.
         /// </summary>
         [TestMethod]
         public void TestNotFound()
@@ -90,10 +97,14 @@ namespace UserRepositoryTest
             Assert.IsNull(user);
         }
 
+        /// <summary>
+        ///  Test method ContainUser search one user on list tasks
+        /// </summary>
         [TestMethod]
         public void TestContainUser()
         {
             var user = new User("Hung");
+            // ReSharper disable once UseObjectOrCollectionInitializer
             var tasks = new Task();
             tasks.Users = new List<User> { new User("Hung") };
             var result = tasks.ContainUser(user);
@@ -101,6 +112,10 @@ namespace UserRepositoryTest
             Assert.IsNotNull(user);
         }
 
+        /// <summary>
+        /// Test method list of tasks of a selected user 
+        /// and selected state in TaskRepository class
+        /// </summary>
         [TestMethod]
         public void TestGetUserTasks()
         {
@@ -109,14 +124,14 @@ namespace UserRepositoryTest
             taskRepository.Tasks = new List<Task>
             {
                 new Task("Task 3", "Do something",TaskType.Bug,
-                new List<User>() { new User("Nick")}, TaskState.Doing, 90)
+                new List<User> { new User("Nick")}, TaskState.Doing, 90)
             };
 
             var tasks = taskRepository.GetUserTasks(new User("Nick"), TaskState.Doing);
-            int complate = 0;
+            var complate = 0;
             foreach (var task in tasks)
             {
-               complate = task.CompletedPercent;
+                complate = task.CompletedPercent;
             }
             Assert.AreEqual(90, complate);
             Assert.IsNotNull(tasks);

@@ -43,7 +43,7 @@ namespace ManagerUse
         public List<User> ReadText()
         {
             Users = new List<User>();
-            string name = null;
+            var name = "";
             try
             {
                 var textInfo = new StreamReader("user.txt");
@@ -83,11 +83,14 @@ namespace ManagerUse
         public User Search(string userName)
         {
             User result = null;
+            // ReSharper disable once InvertIf
             if (userName != null)
             {
                 userName = userName.ToLower();
+                // ReSharper disable once LoopCanBePartlyConvertedToQuery
                 foreach (var user in Users)
                 {
+                    // ReSharper disable once InvertIf
                     if (user.Name.ToLower() == (userName))
                     {
                         result = user;

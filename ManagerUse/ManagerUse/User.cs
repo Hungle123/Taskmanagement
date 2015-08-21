@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections;
+
 namespace ManagerUse
 {
     public class User
@@ -27,6 +28,5 @@ namespace ManagerUse
             Name = name;
             Email = email;
         }
-
     }
 }

@@ -14,6 +14,7 @@ namespace ManagerUse
         public const string CompalateText = "CompletedPercent:";
 
         public List<Task> Tasks { get; set; }
+
         /// <summary>
         /// The instance of this class
         /// </summary>
@@ -44,11 +45,11 @@ namespace ManagerUse
         public List<Task> ReadText()
         {
             Tasks = new List<Task>();
-            string name = "";
-            string description = "";
+            var name = "";
+            var description = "";
+            var userName = "";
             var type = TaskType.Bug;
             var state = TaskState.ToDo;
-            var userName = "";
             try
             {
                 var taskInfo = new StreamReader("task.txt");
@@ -119,7 +120,7 @@ namespace ManagerUse
                     {
                         indexOfValue = CompalateText.Length;
                         var subComplate = line.Substring(indexOfValue).Trim();
-                        var complate = Int32.Parse(subComplate.Replace("%", ""));
+                        var complate = int.Parse(subComplate.Replace("%", ""));
                         var user = new List<User> {new User(userName)};
                         Tasks.Add(new Task(name, description, type, user, state, complate));
                     }
@@ -143,8 +144,10 @@ namespace ManagerUse
         public IList<Task> GetUserTasks(User user, TaskState state)
         {
             var listTasks = new List<Task>();
+            // ReSharper disable once InvertIf
             if (user != null)
             {
+                // ReSharper disable once LoopCanBeConvertedToQuery
                 foreach (var task in Tasks)
                 {
                     var result = task.ContainUser(user);
