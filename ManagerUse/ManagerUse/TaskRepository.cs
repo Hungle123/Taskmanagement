@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 
 namespace ManagerUse
 {
-    public class TaskRepository
+    public class TaskRepository : DbConnection
     {
         public const string NameText = "Name:";
         public const string DescriptionText = "Description:";
@@ -54,7 +56,7 @@ namespace ManagerUse
             {
                 var taskInfo = new StreamReader("task.txt");
                 string listTask;
-
+                var i = 0;
                 while ((listTask = taskInfo.ReadLine()) != null)
                 {
                     var line = listTask.Trim();
@@ -64,7 +66,7 @@ namespace ManagerUse
                     var startWithUser = line.StartsWith(UserText);
                     var startWithState = line.StartsWith(StateText);
                     var startWithComplate = line.StartsWith(CompalateText);
-                    
+
                     int indexOfValue;
 
                     if (startWithName)
@@ -121,9 +123,10 @@ namespace ManagerUse
                         indexOfValue = CompalateText.Length;
                         var subComplate = line.Substring(indexOfValue).Trim();
                         var complate = int.Parse(subComplate.Replace("%", ""));
-                        var user = new List<User> {new User(userName)};
-                        Tasks.Add(new Task(name, description, type, user, state, complate));
+                        var user = new List<User> { new User(){Name = userName} };
+                        Tasks.Add(new Task(i, name, description, type, user, state, complate));
                     }
+                    i++;
                 }
             }
             catch (Exception e)
@@ -158,6 +161,99 @@ namespace ManagerUse
                 }
             }
             return listTasks;
+        }
+
+        public List<Task> ViewTask(int id)
+        {
+            ConnectDatabase();
+            var tasks = new List<Task>();
+            var viewTask = new SqlCommand("dbo.selectTask", DbConnect);
+            viewTask.Parameters.AddWithValue("@TaskID", id);
+            viewTask.CommandType = CommandType.StoredProcedure;
+            using (var reader = viewTask.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    id = Convert.ToInt32(reader["TaskID"]);
+                    var name = Convert.ToString(reader["Name"]);
+                    var description = Convert.ToString(reader["Description"]);
+                    var type = Convert.ToInt32(reader["Type"]);
+                    var types = (TaskType)type;
+                    var state = Convert.ToInt32(reader["State"]);
+                    var states = (TaskState)state;
+                    var complate = Convert.ToInt32(reader["ComplatedPercent"]);
+                    tasks.Add(new Task()
+                    {
+                        TaskId =id,
+                        Name = name,
+                        Description = description,
+                        Type = types,
+                        State = states,
+                        CompletedPercent = complate
+                    });
+                }
+            }
+            return tasks;
+        }
+
+        /// <summary>
+        /// insert info for the tasks
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="type"></param>
+        /// <param name="state"></param>
+        /// <param name="complate"></param>
+        public void InsertTask(string name, string description, int type, int state, int complate)
+        {
+            ConnectDatabase();
+            var insertCommand = new SqlCommand("dbo.insertTask", DbConnect);
+            insertCommand.Parameters.AddWithValue("@Name", name);
+            insertCommand.Parameters.AddWithValue("@Description", description);
+            insertCommand.Parameters.AddWithValue("@Type", type);
+            insertCommand.Parameters.AddWithValue("@State", state);
+            insertCommand.Parameters.AddWithValue("@complate", complate);
+            insertCommand.CommandType = CommandType.StoredProcedure;
+            insertCommand.ExecuteNonQuery();
+            Console.WriteLine("insert complate");
+        }
+
+        /// <summary>
+        /// update info for the tasks
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="type"></param>
+        /// <param name="state"></param>
+        /// <param name="complate"></param>
+        public void UpdateTask(int id, string name, string description, int type, int state, int complate)
+        {
+            ConnectDatabase();
+            var updateCommand = new SqlCommand("dbo.updateTask",DbConnect);
+            updateCommand.Parameters.AddWithValue("@TaskID", id);
+            updateCommand.Parameters.AddWithValue("@Name", name);
+            updateCommand.Parameters.AddWithValue("@Description", description);
+            updateCommand.Parameters.AddWithValue("@Type", type);
+            updateCommand.Parameters.AddWithValue("@State", state);
+            updateCommand.Parameters.AddWithValue("@Complate", complate);
+            updateCommand.CommandType = CommandType.StoredProcedure;
+            updateCommand.ExecuteNonQuery();
+            Console.WriteLine("update Done !");
+        }
+
+        /// <summary>
+        /// Delete task of list tasks
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteTask(int id)
+        {
+           ConnectDatabase();
+           var deleteCommand = new SqlCommand("dbo.deleteTask", DbConnect);
+            deleteCommand.Parameters.AddWithValue("@TaskID", id);
+            deleteCommand.CommandType = CommandType.StoredProcedure;
+            deleteCommand.ExecuteNonQuery();
+            Console.WriteLine("Delete Complate!");
         }
     }
 }

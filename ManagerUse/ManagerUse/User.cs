@@ -1,9 +1,8 @@
-﻿using System.Collections;
-
-namespace ManagerUse
+﻿namespace ManagerUse
 {
     public class User
     {
+        public int UserId { get; set; }
         public string Name { get; set; }
 
         public string Email { get; set; }
@@ -13,18 +12,15 @@ namespace ManagerUse
         /// </summary>
         public User() { }
 
-        public User(string name)
-        {
-            Name = name;
-        }
-
         /// <summary>
         /// Create method constructor two parameters name and email
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="email"></param>
-        public User(string name, string email)
+        public User(int id, string name, string email)
         {
+            UserId = id;
             Name = name;
             Email = email;
         }

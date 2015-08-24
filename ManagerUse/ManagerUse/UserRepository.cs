@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.IO;
+
 namespace ManagerUse
 {
-    public class UserRepository
+    public class UserRepository : DbConnection
     {
         public const string NameText = "Name:";
         public const string EmailText = "Email:";
@@ -48,6 +51,7 @@ namespace ManagerUse
             {
                 var textInfo = new StreamReader("user.txt");
                 string infoUsers;
+                var i = 0;
                 while ((infoUsers = textInfo.ReadLine()) != null)
                 {
                     var line = infoUsers.Trim();
@@ -63,8 +67,9 @@ namespace ManagerUse
                     {
                         var indexOfValue = EmailText.Length;
                         var email = line.Substring(indexOfValue).Trim();
-                        Users.Add(new User(name, email));
+                        Users.Add(new User(i, name, email));
                     }
+                    i++;
                 }
             }
             catch (Exception e)
@@ -99,6 +104,79 @@ namespace ManagerUse
                 }
             }
             return result;
+        }
+
+        /// <summary>
+        /// View infomation for User
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<User> ViewUser(int id)
+        {
+            var listUser = new List<User>();
+            ConnectDatabase();
+            var viewCommand = new SqlCommand("dbo.selectUser", DbConnect);
+            viewCommand.Parameters.AddWithValue("@UserID", id);
+            viewCommand.CommandType = CommandType.StoredProcedure;
+            using (var reader = viewCommand.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    id = Convert.ToInt32(reader["UserID"]);
+                    var name = Convert.ToString(reader["Name"]);
+                    var email = Convert.ToString(reader["Email"]);
+                    listUser.Add(new User(id, name, email));
+                }
+            }
+            return listUser;
+        }
+
+        /// <summary>
+        /// insert user for table user
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        public void InsertUser(string name, string email)
+        {
+            ConnectDatabase();
+            var insertCommand = new SqlCommand("dbo.insertUser", DbConnect);
+            insertCommand.Parameters.AddWithValue("@Name", name);
+            insertCommand.Parameters.AddWithValue("@Email", email);
+            insertCommand.CommandType = CommandType.StoredProcedure;
+            insertCommand.ExecuteNonQuery();
+            Console.WriteLine("insert User Done!");
+        }
+
+        /// <summary>
+        /// Update infomation for users
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="email"></param>
+        public void UpdateUser(int id, string name, string email)
+        {
+            ConnectDatabase();
+            var updateCommand = new SqlCommand("dbo.updateUser", DbConnect);
+            updateCommand.Parameters.AddWithValue("@UserID", id);
+            updateCommand.Parameters.AddWithValue("@Name", name);
+            updateCommand.Parameters.AddWithValue("@Email", email);
+            updateCommand.CommandType = CommandType.StoredProcedure;
+            updateCommand.ExecuteNonQuery();
+            Console.WriteLine("update compate");
+        }
+
+        /// <summary>
+        /// delete user for Users
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteUser(int id)
+        {
+            ConnectDatabase();
+            var deleteCommand = new SqlCommand("dbo.deleteUser", DbConnect);
+            deleteCommand.Parameters.AddWithValue("@UserID", id);
+            deleteCommand.CommandType = CommandType.StoredProcedure;
+            deleteCommand.ExecuteNonQuery();
+            Console.WriteLine("Delete User Done!");
         }
     }
 }

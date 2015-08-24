@@ -24,6 +24,7 @@ namespace ManagerUse
 
     public class Task
     {
+        public int TaskId { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -44,14 +45,16 @@ namespace ManagerUse
         /// <summary>
         /// Create method constructer parameters
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="description"></param>
         /// <param name="type"></param>
         /// <param name="user"></param>
         /// <param name="state"></param>
         /// <param name="completedPercent"></param>
-        public Task(string name, string description, TaskType type, List<User> user, TaskState state, int completedPercent)
+        public Task(int id, string name, string description, TaskType type, List<User> user, TaskState state, int completedPercent)
         {
+            TaskId = id;
             Name = name;
             Description = description;
             Type = type;
