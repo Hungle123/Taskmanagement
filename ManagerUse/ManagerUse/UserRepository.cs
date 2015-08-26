@@ -109,20 +109,17 @@ namespace ManagerUse
         /// <summary>
         /// View infomation for User
         /// </summary>
-        /// <param name="id"></param>
         /// <returns></returns>
-        public List<User> ViewUser(int id)
+        public List<User> ViewUser()
         {
             var listUser = new List<User>();
             ConnectDatabase();
-            var viewCommand = new SqlCommand("dbo.selectUser", DbConnect);
-            viewCommand.Parameters.AddWithValue("@UserID", id);
-            viewCommand.CommandType = CommandType.StoredProcedure;
+            var viewCommand = new SqlCommand("dbo.selectUser", DbConnect) { CommandType = CommandType.StoredProcedure };
             using (var reader = viewCommand.ExecuteReader())
             {
                 while (reader.Read())
                 {
-                    id = Convert.ToInt32(reader["UserID"]);
+                    var id = Convert.ToInt32(reader["UserID"]);
                     var name = Convert.ToString(reader["Name"]);
                     var email = Convert.ToString(reader["Email"]);
                     listUser.Add(new User(id, name, email));
@@ -130,6 +127,7 @@ namespace ManagerUse
             }
             return listUser;
         }
+
 
         /// <summary>
         /// insert user for table user
@@ -144,7 +142,6 @@ namespace ManagerUse
             insertCommand.Parameters.AddWithValue("@Email", email);
             insertCommand.CommandType = CommandType.StoredProcedure;
             insertCommand.ExecuteNonQuery();
-            Console.WriteLine("insert User Done!");
         }
 
         /// <summary>
@@ -162,7 +159,6 @@ namespace ManagerUse
             updateCommand.Parameters.AddWithValue("@Email", email);
             updateCommand.CommandType = CommandType.StoredProcedure;
             updateCommand.ExecuteNonQuery();
-            Console.WriteLine("update compate");
         }
 
         /// <summary>
@@ -176,7 +172,6 @@ namespace ManagerUse
             deleteCommand.Parameters.AddWithValue("@UserID", id);
             deleteCommand.CommandType = CommandType.StoredProcedure;
             deleteCommand.ExecuteNonQuery();
-            Console.WriteLine("Delete User Done!");
         }
     }
 }

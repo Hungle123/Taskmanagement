@@ -72,8 +72,18 @@ namespace UserRepositoryTest
             var userRepository = UserRepository.GetInstance();
             userRepository.Users = new List<User>
             {
-                new User("Khiem", "thienkhiem88@gmail.com"),
-                new User("ABC", "abc@def.com")
+                new User()
+                {
+                   
+                    Name = "Khiem",
+                    Email = "thienkhiem88@gmail.com"
+
+                },
+                new User()
+                {
+                    Name = "ABC",
+                    Email = "abc.xz@gmail.com"
+                }
             };
 
             var user = userRepository.Search("Khiem");
@@ -89,9 +99,18 @@ namespace UserRepositoryTest
         {
             var userRepository = UserRepository.GetInstance();
             userRepository.Users = new List<User>
-            {
-                new User("Khiem", "thienkhiem88@gmail.com"),
-                new User("ABC", "abc@def.com")
+            {  new User()
+                {
+                   
+                    Name = "Khiem",
+                    Email = "thienkhiem88@gmail.com"
+
+                },
+                new User()
+                {
+                    Name = "ABC",
+                    Email = "abc.xz@gmail.com"
+                }
             };
             var user = userRepository.Search("XYZ");
             Assert.IsNull(user);
@@ -103,10 +122,16 @@ namespace UserRepositoryTest
         [TestMethod]
         public void TestContainUser()
         {
-            var user = new User("Hung");
+            var user = new User()
+            {
+                Name = "Hung"
+            };
             // ReSharper disable once UseObjectOrCollectionInitializer
             var tasks = new Task();
-            tasks.Users = new List<User> { new User("Hung") };
+            tasks.Users = new List<User> { new User()
+            {
+                Name = ""
+            } };
             var result = tasks.ContainUser(user);
             Assert.AreEqual(true, result);
             Assert.IsNotNull(user);
@@ -123,11 +148,13 @@ namespace UserRepositoryTest
 
             taskRepository.Tasks = new List<Task>
             {
-                new Task("Task 3", "Do something",TaskType.Bug,
-                new List<User> { new User("Nick")}, TaskState.Doing, 90)
+              //  new Task("Task 3", "Do something",TaskType.Bug, new List<User> {new User(){}}, TaskState.Doing, 90)
             };
 
-            var tasks = taskRepository.GetUserTasks(new User("Nick"), TaskState.Doing);
+            var tasks = taskRepository.GetUserTasks(new User()
+            {
+                Name = "Nick"
+            }, TaskState.Doing);
             var complate = 0;
             foreach (var task in tasks)
             {

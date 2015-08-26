@@ -123,7 +123,7 @@ namespace ManagerUse
                         indexOfValue = CompalateText.Length;
                         var subComplate = line.Substring(indexOfValue).Trim();
                         var complate = int.Parse(subComplate.Replace("%", ""));
-                        var user = new List<User> { new User(){Name = userName} };
+                        var user = new List<User> { new User() { Name = userName } };
                         Tasks.Add(new Task(i, name, description, type, user, state, complate));
                     }
                     i++;
@@ -172,25 +172,32 @@ namespace ManagerUse
             viewTask.CommandType = CommandType.StoredProcedure;
             using (var reader = viewTask.ExecuteReader())
             {
-                while (reader.Read())
+                try
                 {
-                    id = Convert.ToInt32(reader["TaskID"]);
-                    var name = Convert.ToString(reader["Name"]);
-                    var description = Convert.ToString(reader["Description"]);
-                    var type = Convert.ToInt32(reader["Type"]);
-                    var types = (TaskType)type;
-                    var state = Convert.ToInt32(reader["State"]);
-                    var states = (TaskState)state;
-                    var complate = Convert.ToInt32(reader["ComplatedPercent"]);
-                    tasks.Add(new Task()
+                    while (reader.Read())
                     {
-                        TaskId =id,
-                        Name = name,
-                        Description = description,
-                        Type = types,
-                        State = states,
-                        CompletedPercent = complate
-                    });
+                        id = Convert.ToInt32(reader["TaskID"]);
+                        var name = Convert.ToString(reader["Name"]);
+                        var description = Convert.ToString(reader["Description"]);
+                        var type = Convert.ToInt32(reader["Type"]);
+                        var types = (TaskType)type;
+                        var state = Convert.ToInt32(reader["State"]);
+                        var states = (TaskState)state;
+                        var complate = Convert.ToInt32(reader["ComplatedPercent"]);
+                        tasks.Add(new Task()
+                        {
+                            TaskId = id,
+                            Name = name,
+                            Description = description,
+                            Type = types,
+                            State = states,
+                            CompletedPercent = complate
+                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error Message: " + ex.Message);
                 }
             }
             return tasks;
@@ -206,16 +213,22 @@ namespace ManagerUse
         /// <param name="complate"></param>
         public void InsertTask(string name, string description, int type, int state, int complate)
         {
-            ConnectDatabase();
-            var insertCommand = new SqlCommand("dbo.insertTask", DbConnect);
-            insertCommand.Parameters.AddWithValue("@Name", name);
-            insertCommand.Parameters.AddWithValue("@Description", description);
-            insertCommand.Parameters.AddWithValue("@Type", type);
-            insertCommand.Parameters.AddWithValue("@State", state);
-            insertCommand.Parameters.AddWithValue("@complate", complate);
-            insertCommand.CommandType = CommandType.StoredProcedure;
-            insertCommand.ExecuteNonQuery();
-            Console.WriteLine("insert complate");
+            try
+            {
+                ConnectDatabase();
+                var insertCommand = new SqlCommand("dbo.insertTask", DbConnect);
+                insertCommand.Parameters.AddWithValue("@Name", name);
+                insertCommand.Parameters.AddWithValue("@Description", description);
+                insertCommand.Parameters.AddWithValue("@Type", type);
+                insertCommand.Parameters.AddWithValue("@State", state);
+                insertCommand.Parameters.AddWithValue("@complate", complate);
+                insertCommand.CommandType = CommandType.StoredProcedure;
+                insertCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Message: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -229,17 +242,23 @@ namespace ManagerUse
         /// <param name="complate"></param>
         public void UpdateTask(int id, string name, string description, int type, int state, int complate)
         {
-            ConnectDatabase();
-            var updateCommand = new SqlCommand("dbo.updateTask",DbConnect);
-            updateCommand.Parameters.AddWithValue("@TaskID", id);
-            updateCommand.Parameters.AddWithValue("@Name", name);
-            updateCommand.Parameters.AddWithValue("@Description", description);
-            updateCommand.Parameters.AddWithValue("@Type", type);
-            updateCommand.Parameters.AddWithValue("@State", state);
-            updateCommand.Parameters.AddWithValue("@Complate", complate);
-            updateCommand.CommandType = CommandType.StoredProcedure;
-            updateCommand.ExecuteNonQuery();
-            Console.WriteLine("update Done !");
+            try
+            {
+                ConnectDatabase();
+                var updateCommand = new SqlCommand("dbo.updateTask", DbConnect);
+                updateCommand.Parameters.AddWithValue("@TaskID", id);
+                updateCommand.Parameters.AddWithValue("@Name", name);
+                updateCommand.Parameters.AddWithValue("@Description", description);
+                updateCommand.Parameters.AddWithValue("@Type", type);
+                updateCommand.Parameters.AddWithValue("@State", state);
+                updateCommand.Parameters.AddWithValue("@Complate", complate);
+                updateCommand.CommandType = CommandType.StoredProcedure;
+                updateCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Message: " + ex.Message);
+            }
         }
 
         /// <summary>
@@ -248,12 +267,18 @@ namespace ManagerUse
         /// <param name="id"></param>
         public void DeleteTask(int id)
         {
-           ConnectDatabase();
-           var deleteCommand = new SqlCommand("dbo.deleteTask", DbConnect);
-            deleteCommand.Parameters.AddWithValue("@TaskID", id);
-            deleteCommand.CommandType = CommandType.StoredProcedure;
-            deleteCommand.ExecuteNonQuery();
-            Console.WriteLine("Delete Complate!");
+            try
+            {
+                ConnectDatabase();
+                var deleteCommand = new SqlCommand("dbo.deleteTask", DbConnect);
+                deleteCommand.Parameters.AddWithValue("@TaskID", id);
+                deleteCommand.CommandType = CommandType.StoredProcedure;
+                deleteCommand.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error Message: " + ex.Message);
+            }
         }
     }
 }
