@@ -4,7 +4,7 @@
     <h2><%: Title %>.</h2>
     <p class="text-danger">
         <asp:Literal runat="server" ID="ErrorMessage" />
-    </p>
+    </p>    
 
     <div class="form-horizontal">
         <h4>Create a new account.</h4>
@@ -18,6 +18,15 @@
                     CssClass="text-danger" ErrorMessage="The user name field is required." />
             </div>
         </div>
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label" Text="Email" />
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ID="rqEmail" CssClass="text-danger"
+                    ControlToValidate="Email" ErrorMessage="The email field is required" />
+            </div>
+        </div>
+
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Password" CssClass="col-md-2 control-label">Password</asp:Label>
             <div class="col-md-10">
@@ -34,6 +43,13 @@
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The confirm password field is required." />
                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
+            </div>
+        </div>
+        <div class="form-group">
+            <asp:Label runat="server" AssociatedControlID="Address" Text="Address" CssClass="col-md-2 control-label" />
+            <div class="col-md-10">
+                <asp:TextBox runat="server" ID="Address" CssClass="form-control" />
+                <asp:RequiredFieldValidator runat="server" ID="rqAddress" ControlToValidate="Address" CssClass="text-danger" ErrorMessage="The address field is required" />
             </div>
         </div>
         <div class="form-group">

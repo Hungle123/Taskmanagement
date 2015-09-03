@@ -1,15 +1,15 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace ManagerUse
 {
-    class UserTask : DbConnection
+    public class UserTasks : DbConnection
     {
-
         /// <summary>
-        /// View list UserTask in UserTask Table
+        ///   view data usertask manager
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -38,31 +38,12 @@ namespace ManagerUse
             return lists;
         }
 
-        public void InsertUserTask(int id, int userId, int taskId)
-        {
-            ConnectDatabase();
-            using (var insertUserTask = new SqlCommand("dbo.insertUserTask", DbConnect))
-            {
-                try
-                {
-                    insertUserTask.Parameters.AddWithValue("@ID", id);
-                    insertUserTask.Parameters.AddWithValue("@UserID", userId);
-                    insertUserTask.Parameters.AddWithValue("@TaskID", taskId);
-                    insertUserTask.CommandType = CommandType.StoredProcedure;
-                    insertUserTask.ExecuteNonQuery();
-                    Console.WriteLine("insert Done !");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error Message: " + ex.Message);
-                }
-                finally
-                {
-                    insertUserTask.Dispose();
-                }
-            }
-        }
-
+        /// <summary>
+        ///     update usertask managser
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="userId"></param>
+        /// <param name="taskId"></param>
         public void UpdateUserTask(int id, int userId, int taskId)
         {
             ConnectDatabase();
@@ -75,7 +56,6 @@ namespace ManagerUse
                     updateUserTask.Parameters.AddWithValue("@TaskID", taskId);
                     updateUserTask.CommandType = CommandType.StoredProcedure;
                     updateUserTask.ExecuteNonQuery();
-                    Console.WriteLine("update Complate !");
                 }
                 catch (Exception ex)
                 {
@@ -88,27 +68,36 @@ namespace ManagerUse
             }
         }
 
+        /// <summary>
+        ///     Delete usertask manager
+        /// </summary>
+        /// <param name="id"></param>
         public void DeleteUserTask(int id)
         {
             ConnectDatabase();
-            using (var deleteUserTask = new SqlCommand("dbo.deleteUserTask", DbConnect))
+            var deleteCommand = new SqlCommand("dbo.deleteUserTask", DbConnect)
             {
-                try
-                {
-                    deleteUserTask.Parameters.AddWithValue("@ID", id);
-                    deleteUserTask.CommandType = CommandType.StoredProcedure;
-                    deleteUserTask.ExecuteNonQuery();
-                    Console.WriteLine("delete Done !");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error Message: " + ex.Message);
-                }
-                finally
-                {
-                    deleteUserTask.Dispose();
-                }
-            }
+                CommandType = CommandType.StoredProcedure
+            };
+            deleteCommand.Parameters.AddWithValue("@ID", id);
+            deleteCommand.ExecuteNonQuery();
+        }
+
+        /// <summary>
+        ///     inset usertask managser
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="taskId"></param>
+        public void InsertUserTask(int userId, int taskId)
+        {
+            ConnectDatabase();
+            var insertCommand = new SqlCommand("dbo.insertUserTask", DbConnect)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
+            insertCommand.Parameters.AddWithValue("@UserID", userId);
+            insertCommand.Parameters.AddWithValue("@TaskID", taskId);
+            insertCommand.ExecuteNonQuery();
         }
     }
 }

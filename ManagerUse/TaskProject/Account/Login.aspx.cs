@@ -1,45 +1,51 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
-using System;
-using System.Linq;
-using System.Web;
+﻿using System;
+using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
-using TaskProject.Models;
+using ManagerUse;
 
 namespace TaskProject.Account
 {
     public partial class Login : Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            RegisterHyperLink.NavigateUrl = "Register";
-            OpenAuthLogin.ReturnUrl = Request.QueryString["ReturnUrl"];
-            var returnUrl = HttpUtility.UrlEncode(Request.QueryString["ReturnUrl"]);
-            if (!String.IsNullOrEmpty(returnUrl))
-            {
-                RegisterHyperLink.NavigateUrl += "?ReturnUrl=" + returnUrl;
-            }
+
         }
 
         protected void LogIn(object sender, EventArgs e)
         {
-            if (IsValid)
+            var id = 0;
+            var name = "";
+            var role = 0;
+            var loginFrom = new DbConnection();
+            loginFrom.ConnectDatabase();
+            var loginCommand = new SqlCommand("dbo.loginForm", loginFrom.DbConnect)
             {
-                // Validate the user password
-                var manager = new UserManager();
-                ApplicationUser user = manager.Find(UserName.Text, Password.Text);
-                if (user != null)
+                CommandType = CommandType.StoredProcedure
+            };
+            loginCommand.Parameters.AddWithValue("email", Email.Text);
+            loginCommand.Parameters.AddWithValue("password", Password.Text);
+
+            var reader = loginCommand.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
                 {
-                    IdentityHelper.SignIn(manager, user, RememberMe.Checked);
-                    IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                    id = Convert.ToInt32(reader["UserID"]);
+                    name = (Convert.ToString(reader["Name"])).Trim();
+                    role = Convert.ToInt32(reader["RoleID"]);
                 }
-                else
-                {
-                    FailureText.Text = "Invalid username or password.";
-                    ErrorMessage.Visible = true;
-                }
+                Session["UserID"] = id;
+                Session["Name"] = name;
+                Session["Role"] = role;
+                Session["Email"] = Email.Text;
+                Response.Redirect("~/Default.aspx");
+            }
+            else
+            {
+                Response.Redirect("~/Default.aspx");
             }
         }
     }

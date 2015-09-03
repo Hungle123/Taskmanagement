@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Security;
 using System.Web.UI;
@@ -68,13 +65,58 @@ namespace TaskProject
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["Role"] != null)
+            {
+                var sessionRole = (int)Session["Role"];
+                switch (sessionRole)
+                {
+                    case 1:
+                        InfomationUser.Visible = true;
+                        TaskDataRepository.Visible = true;
+                        UserTaskManager.Visible = true;
+                        RegisterUser.Visible = false;
+                        LoginUser.Visible = false;
+                        LogoutUser.Visible = true;
+                        ltWelcomeUser.Text = "Welcome: " + Session["Name"];
+                        ltWelcomeUser.Visible = true;
+                        break;
+                    case 2:
+                        InfomationUser.Visible = false;
+                        TaskDataRepository.Visible = false;
+                        UserTaskManager.Visible = false;
+                        RegisterUser.Visible = false;
+                        LoginUser.Visible = false;
+                        LogoutUser.Visible = true;
+                        ltWelcomeUser.Text = "Welcome: " + Session["Name"];
+                        ltWelcomeUser.Visible = true;
+                        break;
+                    default:
+                        RegisterUser.Visible = true;
+                        LoginUser.Visible = true;
+                        LogoutUser.Visible = false;
+                        break;
+                }
+            }
+            else
+            {
+                RegisterUser.Visible = true;
+                LoginUser.Visible = true;
+                LogoutUser.Visible = false;
+            }
         }
 
         protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
         {
             Context.GetOwinContext().Authentication.SignOut();
         }
-    }
 
+        public bool CheckPermision(string currentUrl, string urlData)
+        {
+            if (currentUrl.Equals(urlData))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
 }

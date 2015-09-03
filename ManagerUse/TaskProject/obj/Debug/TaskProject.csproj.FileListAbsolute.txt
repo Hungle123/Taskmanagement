@@ -1,3 +1,5 @@
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\obj\Debug\TaskProject.csprojResolveAssemblyReference.cache
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\obj\Debug\TaskProject.dll.licenses
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\TaskProject.dll.config
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\TaskProject.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\TaskProject.pdb
@@ -6,6 +8,7 @@ C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\AspN
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\AspNet.ScriptManager.jQuery.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\EntityFramework.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\EntityFramework.SqlServer.dll
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\ManagerUse.exe
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Microsoft.AspNet.FriendlyUrls.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Microsoft.AspNet.Identity.EntityFramework.dll
@@ -28,6 +31,7 @@ C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Owin
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\System.Web.Optimization.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\System.Web.Providers.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\WebGrease.dll
+C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\ManagerUse.pdb
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\System.Web.Optimization.xml
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Antlr3.Runtime.pdb
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Newtonsoft.Json.xml
@@ -46,8 +50,5 @@ C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Micr
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\obj\Debug\TaskProject.csprojResolveAssemblyReference.cache
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\obj\Debug\TaskProject.dll
 C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\obj\Debug\TaskProject.pdb
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\ManagerUse.exe
-C:\Users\dn00001\Documents\GitHub\Taskmanagement\ManagerUse\TaskProject\bin\ManagerUse.pdb

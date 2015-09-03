@@ -13,10 +13,30 @@ namespace TaskProject
         {
             if (!Page.IsPostBack)
             {
-                BindDataToGridView();
+                if (Session["Role"] != null)
+                {
+                    var sessionRole = (int)Session["Role"];
+                    if (sessionRole == 1)
+                    {
+                        BindDataToGridView();
+                    }
+                    else
+                    {
+                        Response.Redirect("~/404.aspx");
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/404.aspx");
+                }
             }
         }
 
+        /// <summary>
+        /// Edit infomation users
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void InfomationUser_OnRowEditing(object sender, GridViewEditEventArgs e)
         {
             try
@@ -31,6 +51,11 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        /// Cencel edit information users
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void InfomationUser_OnRowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             try
@@ -45,6 +70,11 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        /// Update information Users
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void InfomationUser_OnRowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
@@ -52,14 +82,25 @@ namespace TaskProject
                 ltError.Text = string.Empty;
                 DataUser = UserRepository.GetInstance();
                 var row = gvInfomationUser.Rows[e.RowIndex];
-                var hdnUserId = (HiddenField)row.FindControl("hdnUserID");
-                var id = Convert.ToInt32(hdnUserId.Value);
+                var lbUserId = (Label)row.FindControl("lbUserID");
+                var id = Convert.ToInt32(lbUserId.Text);
                 var name = ((TextBox)(row.Cells[1].Controls[0])).Text;
                 var email = ((TextBox)(row.Cells[2].Controls[0])).Text;
-                DataUser.UpdateUser(id, name, email);
-                gvInfomationUser.EditIndex = -1;
-                BindDataToGridView();
-                ltError.Text = "Update Successfully";
+                var password = ((TextBox)(row.Cells[3].Controls[0])).Text;
+                var address = ((TextBox)(row.Cells[4].Controls[0])).Text;
+                var roles = ((TextBox)(row.Cells[5].Controls[0])).Text;
+                var role = Convert.ToInt32(roles);
+                if (DataUser.CheckEmail(email) == false)
+                {
+                    DataUser.UpdateUser(id, name, email, password, address, role);
+                    gvInfomationUser.EditIndex = -1;
+                    BindDataToGridView();
+                    ltError.Text = "Update Successfully";
+                }
+                else
+                {
+                    ltError.Text = "The email already exists or have a used";
+                }
             }
             catch (Exception ex)
             {
@@ -67,6 +108,11 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        /// Delete infomation users
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void InfomationUser_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -80,8 +126,8 @@ namespace TaskProject
                 var id = int.Parse(dataKey.Value.ToString());
                  */
                 var row = gvInfomationUser.Rows[e.RowIndex];
-                var hdnUserId = (HiddenField)row.FindControl("hdnUserID");
-                var id = Convert.ToInt32(hdnUserId.Value);
+                var lbUserId = (Label)row.FindControl("lbUserID");
+                var id = Convert.ToInt32(lbUserId.Text.Trim());
                 DataUser.DeleteUser(id);
                 gvInfomationUser.EditIndex = -1;
                 BindDataToGridView();
@@ -93,6 +139,9 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        /// View information list users
+        /// </summary>
         public void BindDataToGridView()
         {
             try
@@ -117,6 +166,11 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        /// Insert infomation for users
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnAddRow_OnClick(object sender, EventArgs e)
         {
             try
@@ -125,15 +179,40 @@ namespace TaskProject
                 DataUser = UserRepository.GetInstance();
                 var name = txtName.Text.Trim();
                 var email = txtEmail.Text.Trim();
-                DataUser.InsertUser(name, email);
-                gvInfomationUser.EditIndex = -1;
-                BindDataToGridView();
-                ltError.Text = "Insert user successfully";
+                var password = txtPass.Text.Trim();
+                var address = txtAddress.Text.Trim();
+                var role = Convert.ToInt32(ddlRole.SelectedValue);
+                if (DataUser.CheckEmail(email) == false)
+                {
+                    DataUser.InsertUser(name, email, password, address, role);
+                    gvInfomationUser.EditIndex = -1;
+                    BindDataToGridView();
+                    txtEmail.Text = "";
+                    txtName.Text = "";
+                    txtAddress.Text = "";
+                    txtPass.Text = "";
+                    ddlRole.SelectedValue = "none";
+                    ltError.Text = "Insert user successfully";
+                }
+                else
+                {
+                    ltError.Text = "Insert user not successfully";
+                }
             }
             catch (Exception ex)
             {
                 ltError.Text = ex.Message;
             }
+        }
+
+        protected void gvInfomationUser_OnSorting(object sender, GridViewSortEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        protected void gvInfomationUser_OnPageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            gvInfomationUser.PageIndex = e.NewPageIndex;
         }
     }
 }

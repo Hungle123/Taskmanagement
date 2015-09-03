@@ -18,7 +18,6 @@ namespace ManagerUse
                 ConnectionString = "Data Source=localhost;Initial Catalog =TaskManagermant;User ID = sa;Password = hungle123"
             };
             DbConnect.Open();
-            Console.WriteLine("Right");
         }
     }
 }

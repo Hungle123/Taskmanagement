@@ -1,11 +1,7 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using System;
-using System.Linq;
-using System.Web;
+﻿using System;
 using System.Web.UI;
-using TaskProject.Models;
+using ManagerUse;
+
 
 namespace TaskProject.Account
 {
@@ -13,18 +9,34 @@ namespace TaskProject.Account
     {
         protected void CreateUser_Click(object sender, EventArgs e)
         {
-            var manager = new UserManager();
-            var user = new ApplicationUser() { UserName = UserName.Text };
-            IdentityResult result = manager.Create(user, Password.Text);
-            if (result.Succeeded)
+            try
             {
-                IdentityHelper.SignIn(manager, user, isPersistent: false);
-                IdentityHelper.RedirectToReturnUrl(Request.QueryString["ReturnUrl"], Response);
+                ErrorMessage.Text = string.Empty;
+                var registerUser = UserRepository.GetInstance();
+                var userName = UserName.Text;
+                var email = Email.Text;
+                var pass = Password.Text;
+                var address = Address.Text;
+                if (registerUser.CheckEmail(email) == false)
+                {
+                    registerUser.InsertUser(userName, email, pass, address, 2);
+                    UserName.Text = "";
+                    Email.Text = "";
+                    Password.Text = "";
+                    ConfirmPassword.Text = "";
+                    Address.Text = "";
+                    Response.Redirect("~/Account/Login.aspx");
+                }
+                else
+                {
+                    ErrorMessage.Text = "Email already exists or have a used.";
+                }
             }
-            else 
+            catch (Exception ex)
             {
-                ErrorMessage.Text = result.Errors.FirstOrDefault();
+                ErrorMessage.Text = ex.Message;
             }
+
         }
     }
 }

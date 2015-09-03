@@ -48,7 +48,7 @@
     <Compile Include="UserRepository.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="User.cs" />
-    <Compile Include="UserTask.cs" />
+    <Compile Include="UserTasks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

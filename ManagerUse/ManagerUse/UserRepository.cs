@@ -46,12 +46,12 @@ namespace ManagerUse
         public List<User> ReadText()
         {
             Users = new List<User>();
-            var name = "";
+            // var name = "";
             try
             {
                 var textInfo = new StreamReader("user.txt");
                 string infoUsers;
-                var i = 0;
+                //var i = 0;
                 while ((infoUsers = textInfo.ReadLine()) != null)
                 {
                     var line = infoUsers.Trim();
@@ -60,16 +60,16 @@ namespace ManagerUse
 
                     if (startWithName)
                     {
-                        var indexOfValue = NameText.Length;
-                        name = line.Substring(indexOfValue).Trim();
+                        //  var indexOfValue = NameText.Length;
+                        //  name = line.Substring(indexOfValue).Trim();
                     }
                     else if (startWithEmail)
                     {
-                        var indexOfValue = EmailText.Length;
-                        var email = line.Substring(indexOfValue).Trim();
-                        Users.Add(new User(i, name, email));
+                        // var indexOfValue = EmailText.Length;
+                        // var email = line.Substring(indexOfValue).Trim();
+                        Users.Add(new User());
                     }
-                    i++;
+                    //  i++;
                 }
             }
             catch (Exception e)
@@ -122,9 +122,13 @@ namespace ManagerUse
                     var id = Convert.ToInt32(reader["UserID"]);
                     var name = Convert.ToString(reader["Name"]);
                     var email = Convert.ToString(reader["Email"]);
-                    listUser.Add(new User(id, name, email));
+                    var passWord = Convert.ToString(reader["Password"]);
+                    var addRess = Convert.ToString(reader["Address"]);
+                    var role = Convert.ToInt32(reader["Role"]);
+                    listUser.Add(new User(id, name, email, passWord, addRess, role));
                 }
             }
+            DbConnect.Close();
             return listUser;
         }
 
@@ -134,14 +138,39 @@ namespace ManagerUse
         /// </summary>
         /// <param name="name"></param>
         /// <param name="email"></param>
-        public void InsertUser(string name, string email)
+        /// <param name="password"></param>
+        /// <param name="address"></param>
+        /// <param name="role"></param>
+        public void InsertUser(string name, string email, string password, string address, int role)
         {
-            ConnectDatabase();
-            var insertCommand = new SqlCommand("dbo.insertUser", DbConnect);
-            insertCommand.Parameters.AddWithValue("@Name", name);
-            insertCommand.Parameters.AddWithValue("@Email", email);
-            insertCommand.CommandType = CommandType.StoredProcedure;
-            insertCommand.ExecuteNonQuery();
+            try
+            {
+                ConnectDatabase();
+                var insertCommand = new SqlCommand("dbo.insertUser", DbConnect);
+                insertCommand.Parameters.AddWithValue("@Name", name);
+                insertCommand.Parameters.AddWithValue("@Email", email);
+                insertCommand.Parameters.AddWithValue("@Password", password);
+                insertCommand.Parameters.AddWithValue("@Address", address);
+                insertCommand.Parameters.AddWithValue("@RoleID", role);
+                insertCommand.CommandType = CommandType.StoredProcedure;
+                try
+                {
+                    var userEmail = CheckEmail(email);
+                    if (userEmail == false)
+                    {
+                        insertCommand.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                }
+                DbConnect.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         /// <summary>
@@ -150,15 +179,24 @@ namespace ManagerUse
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="email"></param>
-        public void UpdateUser(int id, string name, string email)
+        /// <param name="address"></param>
+        /// <param name="role"></param>
+        /// <param name="password"></param>
+        public void UpdateUser(int id, string name, string email, string password, string address, int role)
         {
             ConnectDatabase();
-            var updateCommand = new SqlCommand("dbo.updateUser", DbConnect);
+            var updateCommand = new SqlCommand("dbo.updateUser", DbConnect)
+            {
+                CommandType = CommandType.StoredProcedure
+            };
             updateCommand.Parameters.AddWithValue("@UserID", id);
             updateCommand.Parameters.AddWithValue("@Name", name);
             updateCommand.Parameters.AddWithValue("@Email", email);
-            updateCommand.CommandType = CommandType.StoredProcedure;
+            updateCommand.Parameters.AddWithValue("@Password", password);
+            updateCommand.Parameters.AddWithValue("@Address", address);
+            updateCommand.Parameters.AddWithValue("@RoleID", role);
             updateCommand.ExecuteNonQuery();
+            //DbConnect.Close();
         }
 
         /// <summary>
@@ -172,6 +210,21 @@ namespace ManagerUse
             deleteCommand.Parameters.AddWithValue("@UserID", id);
             deleteCommand.CommandType = CommandType.StoredProcedure;
             deleteCommand.ExecuteNonQuery();
+            DbConnect.Close();
+        }
+
+        public bool CheckEmail(string email)
+        {
+            ConnectDatabase();
+            var result = false;
+            var checkCommand = new SqlCommand("select Email from Users where Email = @Email", DbConnect);
+            checkCommand.Parameters.AddWithValue("Email", email);
+            var reader = checkCommand.ExecuteReader();
+            if (reader.Read())
+            {
+                result = true;
+            }
+            return result;
         }
     }
 }

@@ -11,12 +11,36 @@ namespace TaskProject
     public partial class TaskDataRepository : System.Web.UI.Page
     {
         public TaskRepository DataTask;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!Page.IsPostBack)
-                BindDataTaskToGridView();
+           
+             if (!Page.IsPostBack)
+            {
+                if (Session["Role"] != null)
+                {
+                    var sessionRole = (int)Session["Role"];
+                    if (sessionRole == 1)
+                    {
+                        BindDataTaskToGridView();
+                    }
+                    else
+                    {
+                        Response.Redirect("~/404.aspx");
+                    }
+                }
+                else
+                {
+                    Response.Redirect("~/404.aspx");
+                }
+            }
         }
 
+        /// <summary>
+        /// Insert infomation Task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnTask_OnClick(object sender, EventArgs e)
         {
             try
@@ -25,12 +49,17 @@ namespace TaskProject
                 DataTask = TaskRepository.GetIntance();
                 var name = txtName.Text.Trim();
                 var description = txtDescription.Text.Trim();
-                var type = Convert.ToInt32(txtType.Text.Trim());
-                var state = Convert.ToInt32(txtState.Text.Trim());
+                var type = Convert.ToInt32(ddlType.SelectedValue);
+                var state = Convert.ToInt32(ddlState.SelectedValue);
                 var complate = Convert.ToInt32(txtComplate.Text.Trim());
-                DataTask.InsertTask(name,description,type,state,complate);
+                DataTask.InsertTask(name, description, type, state, complate);
                 gvTaskRepository.EditIndex = -1;
                 BindDataTaskToGridView();
+                txtName.Text = "";
+                txtComplate.Text = "";
+                txtDescription.Text = "";
+                ddlState.SelectedValue = "none";
+                ddlType.SelectedValue = "none";
                 ltError.Text = "Insert user successfully";
             }
             catch (Exception ex)
@@ -39,6 +68,11 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        /// Edit infomation for task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void gvTaskRepository_OnRowEditing(object sender, GridViewEditEventArgs e)
         {
             try
@@ -53,6 +87,12 @@ namespace TaskProject
             }
         }
 
+
+        /// <summary>
+        /// Cancel edit infomation for task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void gvTaskRepository_OnRowCancelingEdit(object sender, GridViewCancelEditEventArgs e)
         {
             try
@@ -67,6 +107,11 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        ///   Update information for task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void gvTaskRepository_OnRowUpdating(object sender, GridViewUpdateEventArgs e)
         {
             try
@@ -74,8 +119,8 @@ namespace TaskProject
                 ltError.Text = string.Empty;
                 DataTask = TaskRepository.GetIntance();
                 var row = gvTaskRepository.Rows[e.RowIndex];
-                var hiddenField = (HiddenField)row.FindControl("hdnTaskID");
-                var id = Convert.ToInt32(hiddenField.Value);
+                var lbTaskId = (Label)row.FindControl("lbTaskID");
+                var id = Convert.ToInt32(lbTaskId.Text.Trim());
                 var name = ((TextBox)(row.Cells[1].Controls[0])).Text;
                 var description = ((TextBox)(row.Cells[2].Controls[0])).Text;
                 var typeTask = ((TextBox)(row.Cells[3].Controls[0])).Text;
@@ -95,6 +140,12 @@ namespace TaskProject
             }
         }
 
+
+        /// <summary>
+        /// Delete information for task
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void gvTaskRepository_OnRowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             try
@@ -102,8 +153,8 @@ namespace TaskProject
                 ltError.Text = string.Empty;
                 DataTask = TaskRepository.GetIntance();
                 var row = gvTaskRepository.Rows[e.RowIndex];
-                var hiddenField = (HiddenField)row.FindControl("hdnTaskID");
-                var id = Convert.ToInt32(hiddenField.Value);
+                var lbTaskId = (Label)row.FindControl("lbTaskID");
+                var id = Convert.ToInt32(lbTaskId.Text.Trim());
                 DataTask.DeleteTask(id);
                 gvTaskRepository.EditIndex = -1;
                 BindDataTaskToGridView();
@@ -115,6 +166,9 @@ namespace TaskProject
             }
         }
 
+        /// <summary>
+        /// view information for task
+        /// </summary>
         public void BindDataTaskToGridView()
         {
             try
@@ -137,6 +191,11 @@ namespace TaskProject
             {
                 ltError.Text = ex.Message;
             }
+        }
+
+        protected void gvTaskRepository_OnSorting(object sender, GridViewSortEventArgs e)
+        {
+
         }
     }
 }

@@ -11,7 +11,7 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-    <webopt:bundlereference runat="server" path="~/Content/css" />
+    <webopt:BundleReference runat="server" Path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
 </head>
@@ -50,27 +50,24 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
-                        <li><a runat="server" href="~/Users">Users</a></li>
+                        <li><a runat="server" id="Home" href="~/">Home</a></li>
+                        <li><a runat="server" id="About" href="~/About">About</a></li>
+                        <li><a runat="server" id="Contact" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" id="InfomationUser" visible="False" href="~/InfomationUser">InfomationUser</a></li>
+                        <li><a runat="server" id="TaskDataRepository" visible="False" href="~/TaskDataRepository">TaskDataRepository</a></li>
+                        <li><a runat="server" id="UserTaskManager" visible="False" href="~/UserTaskManager">UserTaskManager</a></li>
                     </ul>
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %> !</a></li>
-                                <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
-                                </li>
-                            </ul>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
+                    <div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a runat="server" id="RegisterUser" href="~/Account/Register">Register</a></li>
+                            <li><a runat="server" id="LoginUser" href="~/Account/Login">Log in</a></li>
+                            <li>
+                                <a>
+                                    <asp:Literal runat="server" ID="ltWelcomeUser" Visible="False" /></a>
+                            </li>
+                            <li><a runat="server" id="LogoutUser" visible="False" href="~/Account/Logout">Log out</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
