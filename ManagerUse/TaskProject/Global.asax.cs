@@ -17,8 +17,7 @@ namespace TaskProject
 
         protected void Application_AuthenticateRequest(object sender, EventArgs e)
         {
-          
-
+            
         }
     }
 }
